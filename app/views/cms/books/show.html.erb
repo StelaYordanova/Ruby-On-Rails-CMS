@@ -1,0 +1,9 @@
+<h1>Book Details</h1>
+
+<p><strong>Title:</strong> <%= @book.title %></p>
+<p><strong>Year of Publication:</strong> <%= @book.year_of_publication %></p>
+<p><strong>Author:</strong> <%= @book.author.name %></p>
+
+<%= link_to 'Edit', edit_cms_book_path(@book) %> |
+<%= link_to 'Back', cms_books_path %>
+<%= link_to 'Delete', cms_book_path(@book), method: :delete, data: { confirm: 'Are you sure?' } %>

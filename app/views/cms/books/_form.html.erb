@@ -1,0 +1,40 @@
+<%= form_with(model: book, url: book.persisted? ? cms_book_path(book) : cms_books_path, local: true) do |form| %>
+  <% if book.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
+
+      <ul>
+        <% book.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :year_of_publication %>
+    <%= form.number_field :year_of_publication %>
+  </div>
+
+  <div class="field">
+    <%= form.label :author_id %>
+    <%= form.collection_select :author_id, Author.all, :id, :name, prompt: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :category_ids, "Categories" %>
+    <% categories.each do |category| %>
+      <%= check_box_tag "book[category_ids][]", category.id, book.category_ids.include?(category.id) %>
+      <%= label_tag "book_category_ids_#{category.id}", category.name %><br>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
