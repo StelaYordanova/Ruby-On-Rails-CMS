@@ -23,12 +23,12 @@
 
   <div class="field">
     <%= form.label :author_id %>
-    <%= form.collection_select :author_id, Author.all, :id, :name, prompt: true %>
+    <%= form.select :author_id, @form_options.author_options, { include_blank: true }, { class: 'select' } %>
   </div>
 
   <div class="field">
     <%= form.label :category_ids, "Categories" %>
-    <% categories.each do |category| %>
+    <% @form_options.categories.each do |category| %>
       <%= check_box_tag "book[category_ids][]", category.id, book.category_ids.include?(category.id) %>
       <%= label_tag "book_category_ids_#{category.id}", category.name %><br>
     <% end %>

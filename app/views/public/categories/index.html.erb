@@ -1,0 +1,10 @@
+<h1>Categories</h1>
+<ul>
+  <% @categories.each do |category| %>
+    <li>
+      <%= link_to category.name, public_category_path(category) %>
+    </li>
+  <% end %>
+</ul>
+
+<%= paginate @categories %>

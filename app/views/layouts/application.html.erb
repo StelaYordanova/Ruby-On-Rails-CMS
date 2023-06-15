@@ -1,16 +1,38 @@
+
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>CMS</title>
+<head>
+  <title>Your App</title>  
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-  </head>
+<style>
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
 
-  <body>
-    <%= yield %>
-  </body>
+    nav li {
+      display: inline-block;
+      margin-right: 50px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><%= link_to 'Home', '/' %></li>
+      <li><%= link_to 'Books', cms_books_path %></li>
+      <li><%= link_to 'Authors', cms_authors_path %></li>
+      <li><%= link_to 'Category', cms_categories_path %></li>
+    </ul>
+  </nav>
+  
+  <%= yield %>
+</body>
 </html>

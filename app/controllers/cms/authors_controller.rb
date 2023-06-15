@@ -1,8 +1,8 @@
 
-class Cms::AuthorsController < ApplicationController
+class Cms::AuthorsController < Cms::BaseCmsController
   def index
-    @authors = Author.all
-    # @authors = Author.page(params[:page]).per(10)
+   # @authors = Author.all
+    @authors = Author.page(params[:page]).per(5)
   end
   
   def new
@@ -42,8 +42,11 @@ class Cms::AuthorsController < ApplicationController
     
     def destroy
       author = Author.find(params[:id])
-      author.destroy
-      redirect_to cms_authors_path, notice: 'Author was successfully destroyed.'
+      if author.destroy
+        render :show, status: 422
+      else
+        redirect_to cms_authors_path, notice: 'Author was successfully destroyed.'
+      end
     end
     
   

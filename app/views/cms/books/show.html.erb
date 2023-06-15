@@ -6,4 +6,4 @@
 
 <%= link_to 'Edit', edit_cms_book_path(@book) %> |
 <%= link_to 'Back', cms_books_path %>
-<%= link_to 'Delete', cms_book_path(@book), method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Destroy', destroy_cms_book_path(@book), data: { turbo_confirm: 'Are you sure?', turbo_method: :delete } %>

@@ -1,22 +1,9 @@
 class Cms::BaseCmsController < ApplicationController
-    layout 'cms/layouts/application'
-  end
-  
-  
-module Cms
-  class AuthorsController < BaseCmsController
-   
-  end
-end
 
-module Cms
-  class BooksController < BaseCmsController
-    
-  end
-end
+  before_action :authenticate_user!
+  before_action :check_admin_role
 
-module Cms
-  class CategoriesController < BaseCmsController
-  
+  def check_admin_role
+    redirect_to root_path, alert: 'Access denied' unless current_user.admin?
   end
 end

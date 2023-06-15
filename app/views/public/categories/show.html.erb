@@ -1,0 +1,11 @@
+<h1><%= @category.name %></h1>
+<ul>
+  <% @books.each do |book| %>
+    <li>
+      <%= link_to book.title, public_book_path(book) %>
+      (Author: <%= book.author.name %>, Year: <%= book.year_of_publication %>)
+    </li>
+  <% end %>
+</ul>
+
+<%= paginate @books %>

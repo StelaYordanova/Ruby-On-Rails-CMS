@@ -1,8 +1,14 @@
-class Cms::BooksController < ApplicationController
+class Cms::BooksController < Cms::BaseCmsController
+    before_action :set_form_options, only: [:new, :create, :edit, :update]
+
     def index
-      @books = Book.where("title LIKE ?", "%#{params[:search]}%")
       @books = Book.all
-      # @books = Book.page(params[:page]).per(10)
+      if params[:search].present?
+        @books = @books.where("title LIKE ?", "%#{ params[:search] }%")
+      end
+      
+      @books = @books.order(:title)
+      render :index
     end
   
     def new
@@ -15,9 +21,6 @@ class Cms::BooksController < ApplicationController
       @categories = Category.all
   
       if @book.save
-        # redirect_to @book, notice: 'Book was successfully created.'
-        # redirect_to cms_book_path(@book.id), notice: 'Book was successfully created.'
-
         redirect_to cms_book_path(@book), notice: 'Book was successfully created.'
       else
         render :new, status: 422
@@ -43,14 +46,13 @@ class Cms::BooksController < ApplicationController
     def show
       @book = Book.find(params[:id])
     end
-  
-    def search
-      @search_query = params[:search]
-      @books = Book.where("title LIKE ?", "%#{@search_query}%")
-      @books = @books.order(:title)
-      render :index
+
+    def set_form_options
+      @form_options = OpenStruct.new
+      @form_options.author_options = Author.all.map {|a| [a.name, a.id]}
+      @form_options.categories = Category.all
     end
-    
+
     def destroy
       @book = Book.find(params[:id])
       @book.destroy
@@ -61,7 +63,6 @@ class Cms::BooksController < ApplicationController
   
     def book_params
       params.require(:book).permit(:title, :year_of_publication, :author_id, category_ids: [])
-      # params.require(:book).permit(:title, :year_of_publication, :author_id, category_ids: [])
     end
   end
   
